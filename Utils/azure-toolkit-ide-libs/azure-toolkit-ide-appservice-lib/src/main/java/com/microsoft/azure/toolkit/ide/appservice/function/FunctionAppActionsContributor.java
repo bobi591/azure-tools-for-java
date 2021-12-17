@@ -20,6 +20,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 import static com.microsoft.azure.toolkit.ide.common.action.ResourceCommonActionsContributor.OPEN_AZURE_SETTINGS;
+import static com.microsoft.azure.toolkit.ide.common.action.ResourceCommonActionsContributor.OPEN_URL;
 import static com.microsoft.azure.toolkit.lib.common.operation.AzureOperationBundle.title;
 
 public class FunctionAppActionsContributor implements IActionsContributor {
@@ -79,16 +80,16 @@ public class FunctionAppActionsContributor implements IActionsContributor {
         am.registerAction(TRIGGER_FUNCTION, new Action<>(triggerView));
 
         final ActionView.Builder downloadCliView = new ActionView.Builder("Download")
-                .title(s -> Optional.ofNullable(s).map(r -> title("function.download_core_tools")).orElse(null));
+                .title(s -> title("function.download_core_tools"));
         final Action<Void> downloadCliAction = new Action<>((v) -> {
-            am.getAction(ResourceCommonActionsContributor.OPEN_URL).handle(CORE_TOOLS_URL);
+            am.getAction(OPEN_URL).handle(CORE_TOOLS_URL);
         }, downloadCliView);
         downloadCliAction.authRequired(false);
         am.registerAction(DOWNLOAD_CORE_TOOLS, downloadCliAction);
 
         final ActionView.Builder configCliView = new ActionView.Builder("Configure")
-                .title(s -> Optional.ofNullable(s).map(r -> title("function.config_core_tools")).orElse(null));
-        final Action<Void> configCliAction = new Action<>((v) -> am.getAction(OPEN_AZURE_SETTINGS).handle(null), configCliView);
+                .title(s -> title("function.config_core_tools"));
+        final Action<Void> configCliAction = new Action<>((v, e) -> am.getAction(OPEN_AZURE_SETTINGS).handle(null, e), configCliView);
         configCliAction.authRequired(false);
         am.registerAction(CONFIG_CORE_TOOLS, configCliAction);
     }

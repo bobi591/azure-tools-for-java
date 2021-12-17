@@ -127,6 +127,11 @@ public class SignInWindow extends AzureDialogWrapper {
         return AzureWebHelpProvider.HELP_SIGN_IN;
     }
 
+    @Override
+    protected DialogStyle getStyle() {
+        return DialogStyle.COMPACT;
+    }
+
     @Nullable
     @Override
     protected JComponent createCenterPanel() {
